@@ -1,2 +1,3 @@
 # StackLang
-Work in progress, currently prototyping my new language concept.
+
+Work in progress on my new language, StackLang. Documentation is inside the docs folder.
