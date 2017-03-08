@@ -1,24 +1,19 @@
-/* Define constants */
-/* End of a file must be "END" */
-#define  EOF             256
-/* Digit is a number 0-9 */
-#define  DIGIT           257
-/* Operator is +, -, *, or /. */
-#define  OPERATOR        259
-/* End statement is, obviously, a semicolon. */
-#define  END_STATEMENT   260
-/* Begin of a file must be "BEGIN" */
-#define  BEGIN           261
-/* The stack prefixes are used to specify what type of stack you are operating on. */
-/* For example, S1[0] is the first element of String Stack 1. */
-/* And N1[0] is the first element of Number Stack 1. */
-#define  STACKPREFIX_S   262
-#define  STACKPREFIX_N   263
-#define  STACKPREFIX_I   264
-/* Stack Locator is which element of the stack you are operating on. */
-#define  S_LOCATOR       266
+#define  EOF               256
+#define  NUMBER            257
+/* Equals is the assignment operator. */
+#define  EQUALS            258
+/* Stack Prefix is the prefix that is used to show the type of stack being operated on. */
+/* It is either "S" for String, "N" for Number, or "I" for instruction. */
+#define  STACK_PREFIX      259
+#define  OPERATOR          260
+/* Stack selector is what comes after the Stack selector. */
+/* It selects from the stack which slot you wish to operate on. */
+/* So "S1" would be choosing the string stack with id 1. */
+#define  STACK_SELECTOR    261
+/* Slot selector is what selects the slot from the desired stack. */
+#define  SLOT_SELECTOR     262
 
-typedef struct { int class; char *rep } Token_type;
+typedef struct { int class; char* rep } Token_type;
 
 extern Token_type Token;
 extern void getNextToken(void);
