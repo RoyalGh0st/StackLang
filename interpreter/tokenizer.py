@@ -10,6 +10,10 @@ STACK_PREFIX = '$'
 # < is used whenever you are selecting something.
 # Ususally a stack and a slot on the stack.
 SELECT_PREFIX = '<'
+# Assign
+ASSIGN = '='
+# End of statement
+END_OF_STATEMENT = ';'
 
 class Token(object):
     def __init__(self, type, value):
@@ -44,6 +48,8 @@ class Tokenizer(object):
         self.currentToken = None
         # List of errors
         self.errors = {1: 'Error: Expected token does not match current token.'}
+        # List of tokens in the file
+        self.tokenList = [Token] * len(self.text)
         
     def error(errorId):
         raise Exception(self.errors[errorId])
@@ -69,36 +75,55 @@ class Tokenizer(object):
         
         if currentChar.isDigit():
             token = Token(INTEGER, int(currentChar))
+            self.tokenList.append(token)
             self.pos += 1
             return token
             
         if currentChar == '+':
             token = Token(PLUS, currentChar)
+            self.tokenList.append(token)
             self.pos += 1
             return token
             
         if currentChar == '-':
             token = Token(MINUS, currentChar)
+            self.tokenList.append(token)
             self.pos += 1
             return token
             
         if currentChar == '*':
             token = Token(TIMES, currentChar)
+            self.tokenList.append(token)
             self.pos += 1
             return token
             
         if currentChar == '/':
             token = Token(DIVIDE, currentChar)
+            self.tokenList.append(token)
             self.pos += 1
             return token
             
         if currentChar == '$':
             token = Token(STACK_PREFIX, currentChar)
+            self.tokenList.append(token)
             self.pos += 1
             return token
             
         if currentChar == '<':
             token = Token(SELECT_PREFIX, currentChar)
+            self.tokenList.append(token)
+            self.pos += 1
+            return token
+            
+        if currentChar == '=':
+            token = Token(ASSIGN, currentChar)
+            self.tokenList.append(token)
+            self.pos += 1
+            return token
+            
+        if currentChar == ';':
+            token = Token(END_OF_STATEMENT, currentChar)
+            self.tokenList.append(token)
             self.pos += 1
             return token
             
