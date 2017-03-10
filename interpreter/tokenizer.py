@@ -105,5 +105,6 @@ class Tokenizer(object):
     def eat(self, tokenType):
         if self.currentToken.type == tokenType:
             self.token = self.getNextToken()
+            return 1
         else:
-            error(1)
+            return 0
