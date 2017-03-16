@@ -1,27 +1,6 @@
 from ExprHandlers import MathHandler
-import Driver
-
-''' Constants '''
-# END is obviously the end of the compiled list
-# And BEGIN is obviously the start of the compiled list
-BEGIN, END = 'BEGIN', 'END'
-# INTEGER is just the symbol for a number
-INTEGER = 'INTEGER'
-# Here we have the mathematics constants
-PLUS, MINUS = 'PLUS', 'MINUS'
-MULTIPLY, DIVIDE = 'MULTIPLY', 'DIVIDE'
-# The prefixes
-# So selecting a stack and its slot looks like this:
-# $1~1 for stack 1, slot 1, or
-# $3~4 for stack 3, slot 4
-STACK_PREFIX = 'STACK PREFIX'
-SLOT_PREFIX = 'SLOT PREFIX'
-# Assignment operator
-ASSIGN = 'ASSIGN'
-# Layout character
-LAYOUT = 'LAYOUT'
-# End of statement
-EOS = 'EOS'
+import Stacks
+import Tokens
 
 class Token(object):
     '''
