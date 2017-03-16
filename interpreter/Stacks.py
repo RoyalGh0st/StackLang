@@ -1,4 +1,13 @@
 # This file is just a data file.
 # It contains the stacks
+# And a little bit of information about them.
 
-Stacks = [[[None] for x in range(10)] for y in range(50)]
+VarStacks = [[[None] for x in range(AmtVarStacks)] for y in range(VarStackSize)]
+
+# Is initialized to 50 by default, can be expanded
+InstructStack = [[None] for x in range(InstructStackSize)]
+
+InstructStackSize = 50
+
+AmtVarStacks = 5
+VarStackSize = 50
