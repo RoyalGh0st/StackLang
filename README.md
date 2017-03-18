@@ -8,5 +8,11 @@ object. Objects can be linked to each other, but no inheritance, because linking
 other linked object's functions, unless an object has the property "NO_SHARE_FUNC" enabled. You can also choose which functions to
 not share.
 <br>
+
+Contribution guide:
+------
+Contribute to the <code> interpreter-contr </code> branch to help with the interpreter.
+Contribute to the <code> docs-contr </code> branch to help with the documentation.
+
 Further documentation in the docs folder.
 This is a work in progress, the very early stages.
