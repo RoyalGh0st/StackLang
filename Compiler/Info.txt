@@ -1,0 +1,5 @@
+Information about the ILang compiler
+====================================
+
+ILang is a language like Java, in that it is compiled to an intermediate language before being interpreted. As such, there are two
+parts to the ILang environment: the compiler and the interpreter. This is the compiler.
