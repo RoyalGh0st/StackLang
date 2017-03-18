@@ -1,0 +1,75 @@
+Program Structure
+=================
+
+The structure of a hello world program in I would look like this:
+
+    Object HelloWorld {
+        CHANNEL_1_TRANSFER_METHOD = Standard;
+        CHANNEL_1.Connect(Output);
+        
+        SendHelloWorld()(Null):{
+            Send(CHANNEL_1)("Hello, world!");
+        }
+    }
+    
+    Object Output {
+        CHANNEL_1_TRANSFER_METHOD = Standard;
+        CHANNEL_1.Connect(HelloWorld);
+        
+        Output(str toPrint)(Null):{
+            print(toPrint);
+        }
+        
+        OnRecieve(CHANNEL_1)(Null):{
+            Output(Recived(CHANNEL_1));
+        }
+    }
+    
+    Activate(HelloWorld(SendHelloWorld));
+    
+    
+Of course, you don't have to write it with the Output object, you could just create a HelloWorld function that prints "Hello, world!"
+
+Let's break this program down into parts.
+
+    - Object HelloWorld {
+      Creates an object with the name of HelloWorld
+    
+    - CHANNEL_1_TRANSFER_METHOD = Standard;
+      Sets the transfer method for channel 1
+    
+    - CHANNEL_1.Connect(Output);
+      Links the first port to the Output object.
+    
+    - SendHelloWorld()(Null):{
+      This is a function declaration. This function takes no input and outputs Null.
+      
+    - Send(CHANNEL_1)("Hello, world!");
+      Sends the string "Hello, world" along channel 1
+    
+    Then the two ending curly braces end the function and object.
+    
+    - Object Output {
+      Creates an object called Output
+      
+    Then the same initialization, but CHANNEL_1.Connect links to HelloWorld this time.
+    
+    - Output(str toPrint)(Null):{
+      Another function declaration, this time taking a string as input.
+      
+    - print(toPrint);
+      Prints the toPrint argument
+      
+    Curly brace ends function
+    
+    - OnRecieve(CHANNEL_1)(Null):{
+      A builtin function that activates on recival of data from specified channel.
+      
+    - Output(Received(CHANNEL_1));
+      Calls the Output function on the data recived from channel 1
+      
+    Then the function and object are ended.
+    
+    - Activate(HelloWorld(SendHelloWorld));
+      Activates the SendHelloWorld function. You may only have one of these statements in a program.
+    
