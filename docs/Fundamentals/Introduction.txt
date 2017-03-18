@@ -1,0 +1,26 @@
+Introduction
+============
+
+I is a functional object language, as I like to call it. It is based off of one simple principle: everything is a self-contained
+object. This sounds like the singleton pattern, but it's not. Objects are interconnected through channels, which send data
+from one object to another. Each object has its own functions and variables, which can be sent through the channels. More on data
+transfer in channels.txt. 
+
+Each object has a set of ports, which you can use to link to other objects. Objects have a built in protocol for data transfer, 
+which is called CHANNEL_X_TRANSFER_METHOD (substitute X with the desired channel). This variable can be set to one of eight values,
+these being:
+    - Standard, which sends everything in the form of a string, which is converted on recival. This is the most secure transfer
+      protocol.
+    - Function, which adds the method sent to the object it is being sent to.
+    (Now we get into the type-specific area)
+    - Char, which sends only single characters.
+    - Integer, which sends only integers (-32, 767 to 32, 767).
+    - Long, which sends onlu long numbers (−2,147,483,64 to 2,147,483,647)
+    - Float, which sends only floating-point numbers.
+    - Double, which is to float what long is to int.
+    - String, which sends only string.
+    - Boolean, which sends only booleans.
+
+It is reccomended that Standard transfer type is used, because it is more secure than the others. However, if you want to send
+specific data, you can use one of the type specific methods. The type-specific methods will cause an error if you try to send 
+something other than the type of transfer. Be careful, the environment variable specifying transfer method can only be set once.    
