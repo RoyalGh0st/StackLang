@@ -3,8 +3,8 @@
 /* Then it converts each reversed letter to a number (its place in the alphabet), adds them together, and outputs that. */
 
 Object Input {
-    CHANNEL_1 = Reverser;
-    CHANNEL_2 = LettersToNumbersConverter;
+    CHANNEL_1.Connect(Reverser);
+    CHANNEL_2.Connect(LettersToNumbersConverter);
     
     CHANNEL_1_TRANSFER_METHOD = Standard;
     CHANNEL_2_TRANSFER_METHOD = Standard;
@@ -18,7 +18,7 @@ Object Input {
 }
 
 Object Reverser {
-    CHANNEL_1 = Input;
+    CHANNEL_1.Connect(Input);
     
     CHANNEL_1_TRANSFER_METHOD = Standard;
     
@@ -38,7 +38,7 @@ Object Reverser {
 }
 
 Object LettersToNumbersConverter {
-    CHANNEL_1 = Input;
+    CHANNEL_1.Connect(Input);
     
     CHANNEL_1_TRANSFER_METHOD = Standard;
     
