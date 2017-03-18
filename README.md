@@ -1,15 +1,12 @@
-# StackLang
+# ILang\*
 
-Work in progress on my new language, StackLang. Documentation is inside the docs folder.
+\* ILang as in the letter I <br>
+Not a very original name,  but whatever.
 
--------
-
-# Contribution
-
-If you want to contribute to the interpreter, edit in the <code>interpreter-unconfirmed</code> branch. <br>
-If you want to contribute to the documentation, edit in the <code>docs-unconfirmed</code> branch.
-<br><br>
-Only submit code if you're pretty certain it will work. Also, please provide documentation for or inside your code, as it is much
-easier for everyone else. 
+ILang is a functional/object oriented language. Everything you use is an object, and every function you use is attached to an 
+object. Objects can be linked to each other, but no inheritance, because linking objects gives the linked objects access to each
+other linked object's functions, unless an object has the property "NO_SHARE_FUNC" enabled. You can also choose which functions to
+not share.
 <br>
-Thank you!
+Further documentation in the docs folder.
+This is a work in progress, the very early stages.
