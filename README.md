@@ -16,3 +16,5 @@ Contribute to the <code> docs-contr </code> branch to help with the documentatio
 
 Further documentation in the docs folder.
 This is a work in progress, the very early stages.
+
+## NOTE: I will not be doing work on this project for an unspecified period of time, and thus, I will not be reviewing contributions. I apologize for the inconvenience.
