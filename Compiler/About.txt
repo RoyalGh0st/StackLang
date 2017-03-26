@@ -1,0 +1,7 @@
+About the ILang compiler
+========================
+
+The ILang compiler is the first stage of handling an I program. The compiler has two stages: parsing, converting, and compiling. 
+The parsing stage creates a list of tokens from the input text, and the conversion stage converts this token list into intermediate
+code. After the intermediate code is generated, the compilation stage converts this intermediate code into C code, which is then
+compiled using the latest GCC version.
