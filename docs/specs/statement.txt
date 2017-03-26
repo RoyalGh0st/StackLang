@@ -19,13 +19,13 @@ A single statement in I takes one of six forms:
 A logic statement is defined by the following syntax:
 
   (if, elif, else)(logical parameters) {
-    (one or more statements of any type)
+    (one or more statements of any type, except function definitions)
   }
 
 It is parsed into a single block (in the token list) in the following way:
   ...[[(if, elif, else),
         [(logical parameters)]]
-        (one or more statements of any type)
+        (one or more statements of any type, except function definitions)
      ]...
 
 As an example:
@@ -41,7 +41,7 @@ A switch statement follows a different syntax:
   switch(variable) {
     ( 1 or more times (
     ( 1 or more times((case)(value):))
-      (one or more statements of any type)
+      (one or more statements of any type, except function definitions)
     ))
   }
 
@@ -49,7 +49,7 @@ It is parsed into a single block (in the token list) in the following way:
   ...[
       [switch] 
       ( 1 or more times ( 
-        [value, (one or more statements of any type)]
+        [value, (one or more statements of any type, except function definitions)]
       ))
      ]...
      
@@ -123,7 +123,7 @@ It is parsed into a single block (in the token list) in the following way:
         [(parameters]
       ],
       [
-        (one or more statements of any type)
+        (one or more statements of any type, except function definitions)
       ]
      ]...
      
