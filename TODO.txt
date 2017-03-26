@@ -1,0 +1,13 @@
+A list of current objectives.
+
+Priority 1:
+===========
+- Recognize (parse) variable types short, int, long
+- Recognize (parse) variable types char, str
+- Recognize (parse) basic mathematical operators
+- Recognize (parse) a statement (definition in docs/specs/statement.txt)
+
+Priority 2:
+===========
+- Implement variable storage
+- Implement execution of mathematical operators
