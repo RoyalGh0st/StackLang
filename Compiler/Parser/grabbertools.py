@@ -44,23 +44,18 @@ def getNextKeySeq(text):
 def getNextVarDec(text):
     # Gets the next variable declaration from the text
     # See /docs/specs/statements.txt for more details
-    pos = 0
-    currentWord = ''
-    currentChar = ''
-    statement = 
     
-    while (currentWord != 'char' or 'str' 
-                           or 'short' or 'int' or 'long'):
-        # Go until a variable declaration word is found
-        currentWord = getNextWord(text[pos:])
-        pos += len(currentWord) + 1
+    getvardec = re.compile('^((char|str|short|int|long)( \\w+)( +?= +?\\d)?)')
+    vardec = getvardec.match(text)
     
-    while (currentChar != ';'):
-        statement += currentChar
-        currentChar = text[pos]
-        pos += 1
+    if vardec is not None:
+        vardecindex = vardec.span
+    else:
+        return None
     
-    return statement 
+    vardec = text[vardecindex[0]:vardecindex[1]]
+    
+    return vardec
         
 def isVarKeyWord(word):
     if (word == 'char'):
