@@ -27,7 +27,9 @@ def getNextWord(text):
 
 def getNextKeySequence(text):
     # This function grabs the next key sequence from input text
-    getseq = re.compile('''(^[(\\|\\|)|(&&)|(==)|(!=)|(>=)|(<=)|(/\\*)|(\\*/)|(//)]{2})|(^[=|<|>|\\.|\\'|"|;|:|,|+|-|*])''')
+    # At the moment, just mathematical operators
+    # And semicolons
+    getseq = re.compile('''(^[\\+|\\-|\\*|/|;)''')
     # ^^ gets all the key sequences
     seq = getseq.match(text)
     if seq is not None:
@@ -39,29 +41,16 @@ def getNextKeySequence(text):
     
     return(seq)
 
-def isKeyWord(word):
-    # The name here might be a bit misleading
-    # The function checks if the word input is a key word
-    # And if so, return the corresponding token constant
-    if (word == 'if'):
-        return (Tokens.IF)
-    elif (word == 'else'):
-        return (Tokens.ELSE)
-    elif (word == 'elif'):
-        return (Tokens.ELIF)
+def isVarKeyWord(word):
+    if (word == 'char'):
+        return word
+    elif (word == 'str'):
+        return word
     elif (word == 'short'):
-        return(Tokens.SHORT)
+        return word
     elif (word == 'int'):
-        return (Tokens.INT)
+        return word
     elif (word == 'long'):
-        return (Tokens.LONG)
-    elif (word == 'float'):
-        return (Tokens.FLOAT)
-    elif (word == 'double'):
-        return (Tokens.DOUBLE)
-    elif (word == 'true'):
-        return (Tokens.TRUE)
-    elif (word == 'false'):
-        return (Tokens.FALSE)
+        return word
     else:
         return False
