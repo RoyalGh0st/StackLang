@@ -1,0 +1,180 @@
+statement.txt
+Defines what exactly a statement is, and the syntax for it.
+===========================================================
+
++================================================================================================+
+| ANY CORRECT IMPLEMENTATION OF I LANGUAGE MUST FOLLOW THE STATEMENT SPECIFICATIONS IN THIS FILE |
++================================================================================================+
+
+A single statement in I takes one of six forms:
+  - Logic statement
+  - Simple statement
+  - Function call
+  - Loop statement
+  - Variable declaration
+  - Function definition
+
+===================================================
+
+A logic statement is defined by the following syntax:
+
+  (if, elif, else)(logical parameters) {
+    (one or more statements of any type)
+  }
+
+It is parsed into a single block (in the token list) in the following way:
+  ...[[(if, elif, else),
+        [(logical parameters)]]
+        (one or more statements of any type)
+     ]...
+
+As an example:
+  if (a == b) {
+    putstr("a");
+    putstr("b");
+  }
+
+This is an if statement that, if true, will use the built in function putstr to print a and b to the terminal.
+
+A switch statement follows a different syntax:
+
+  switch(variable) {
+    ( 1 or more times (
+    ( 1 or more times((case)(value):))
+      (one or more statements of any type)
+    ))
+  }
+
+It is parsed into a single block (in the token list) in the following way:
+  ...[
+      [switch] 
+      ( 1 or more times ( 
+        [value, (one or more statements of any type)]
+      ))
+     ]...
+     
+As an example:
+
+  switch(a) {
+    case 1:
+      putstr("1");
+      break;
+    case 2:
+      putstr("2");
+      break;
+    default:
+      putstr("3");
+
+=======================================================
+
+A simple statement is defined by the following syntax:
+
+  ( one or more times (
+    (one operand)(one operator)({unless a unary operator}:(one operand));
+  ))
+
+It is parsed into a single block (in the token list) in the following way:
+
+  ...[
+    ( one or more times (
+      [(one operand), (one operator), {unless unary operator: (one operand)}]
+    ))
+    ]...
+    
+As an example:
+
+  a + b
+
+Is tokenized to:
+
+  ...[
+    a, +, b
+    ]...
+    
+ ==================================================
+ 
+ A function call is defined by the following syntax:
+ 
+  (function(parameters));
+  
+It is parsed into a single block (in the token list) in the following way:
+
+  ...[
+      (function), [(parameters)]
+     ]...
+     
+ As an example:
+ 
+  func1(a, b);
+  
+===================================================
+
+A loop statement is defined by the following syntax:
+
+  (for, while)(parameters) {
+    (one or more statements of any type)
+  }
+  
+It is parsed into a single block (in the token list) in the following way:
+
+  ...[
+      [
+        (for, while),
+        [(parameters]
+      ],
+      [
+        (one or more statements of any type)
+      ]
+     ]...
+     
+As an example:
+
+  for (int a; a < 10; ++a) {
+    putnum(a);
+  }
+  
+========================================================
+
+A variable declaration is defined by the following syntax:
+
+  (variable type)(name){Optional{=, (value)}};
+  
+It is parsed into a single block (in the token list) in the following way:
+
+  ...[
+      (type),
+      (name)
+      {Optional:
+        (value)
+      }
+    ]...
+    
+As an example:
+  int a = 1;
+      
+=========================================================
+
+A function definition is defined by the following syntax:
+
+  func (function name)(parameters)(return type):{
+    (one or more statements of any type, except function definitions)
+  }
+
+It is parsed into a single block (in the token list) in the following way:
+
+  ...[
+      (name),
+      [
+        (parameters)
+      ],
+      (return type),
+      [
+        (one or more statements of any type, except function definitions)
+      ]
+     ]...
+  
+As an example:
+
+  func a(int b, int c)(int):{
+    return(a + b);
+  }
