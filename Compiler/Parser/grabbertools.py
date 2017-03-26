@@ -13,7 +13,7 @@ import re
 def getNextWord(text):
     # This function grabs the next word from input text
     # And returns it
-    getword = re.compile('^[\w]+') # Gets the next word from the input
+    getword = re.compile('^[a-zA-Z_]+') # Gets the next word from the input
     word = getword.match(text)
     if word is not None:
         wordindex = word.span()
@@ -25,7 +25,7 @@ def getNextWord(text):
     return (word)
 # end getNextWord
 
-def getNextKeySequence(text):
+def getNextKeySeq(text):
     # This function grabs the next key sequence from input text
     # At the moment, just mathematical operators
     # And semicolons
@@ -41,6 +41,27 @@ def getNextKeySequence(text):
     
     return(seq)
 
+def getNextVarDec(text):
+    # Gets the next variable declaration from the text
+    # See /docs/specs/statements.txt for more details
+    pos = 0
+    currentWord = ''
+    currentChar = ''
+    statement = 
+    
+    while (currentWord != 'char' or 'str' 
+                           or 'short' or 'int' or 'long'):
+        # Go until a variable declaration word is found
+        currentWord = getNextWord(text[pos:])
+        pos += len(currentWord) + 1
+    
+    while (currentChar != ';'):
+        statement += currentChar
+        currentChar = text[pos]
+        pos += 1
+    
+    return statement 
+        
 def isVarKeyWord(word):
     if (word == 'char'):
         return word
