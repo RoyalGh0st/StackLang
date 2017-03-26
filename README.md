@@ -2,19 +2,15 @@
 
 \* ILang as in the ninth letter of the alphabet <br>
 Not a very original name,  but whatever.
-
-ILang is a functional object language. Everything you use is an object, and every function you use is attached to an 
-object. Objects can be linked to each other, but no inheritance, because linking objects gives the linked objects access to each
-other linked object's functions, unless an object has the property "NO_SHARE_FUNC" enabled. You can also choose which functions to
-not share.
 <br>
 
-Contribution guide:
-------
-Contribute to the <code> interpreter-contr </code> branch to help with the interpreter.
-Contribute to the <code> docs-contr </code> branch to help with the documentation.
+ILang is a functional object language, a term I coined myself (at least I think I did). It is based off of closed objects and 
+piping. Each object has its own specific functions. Data is sent through channels linking objects, and the data is only
+available to the object it is sent to and sent from. This is done in the hopes of ultimate modularization, in which objects can be
+added and removed without consequence.
+<br>
 
 Further documentation in the docs folder.
-This is a work in progress, the very early stages.
+<br>
 
-## NOTE: I will not be doing work on this project for an unspecified period of time, and thus, I will not be reviewing contributions. I apologize for the inconvenience.
+## Please note: this is a very young project, so many features are not yet available.
