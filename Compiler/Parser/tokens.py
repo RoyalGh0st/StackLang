@@ -5,6 +5,7 @@
 ###########################
 # Miscallaneous Constants #
 ###########################
+NUM, STR = 'NUM', 'STR'
 PLUS, MINUS = 'PLUS', 'MINUS'
 TIMES, DIVIDE = 'TIMES', 'DIVIDE'
 RBRACE, LBRACE = 'RBRACE', 'LBRACE'
@@ -78,11 +79,11 @@ STATIC = 'STATIC'
 VAR_NAME = 'VAR_NAME'
 
 Var = {
-    'short': SHORT,
-    'int': INT,
-    'long': LONG,
-    'float': FLOAT,
-    'double': DOUBLE,
+    'Short': SHORT,
+    'Int': INT,
+    'Long': LONG,
+    'Float': FLOAT,
+    'Double': DOUBLE,
     'Immutable': IMMUTABLE,
     'Volatile': VOLATILE,
     'Internal': INTERNAL,
@@ -108,8 +109,8 @@ Keywords = {
     'false': FALSE,
     'or': OR,
     'and': AND,
-    'num': NUM,
-    'str': STR
+    'num': 'NUM',
+    'str': 'STR'
 }
 
 KeySequences = {
