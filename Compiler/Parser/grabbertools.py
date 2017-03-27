@@ -56,17 +56,3 @@ def getNextVarDec(text):
     vardec = text[vardecindex[0]:vardecindex[1]]
     
     return vardec
-        
-def isVarKeyWord(word):
-    if (word == 'char'):
-        return word
-    elif (word == 'str'):
-        return word
-    elif (word == 'short'):
-        return word
-    elif (word == 'int'):
-        return word
-    elif (word == 'long'):
-        return word
-    else:
-        return False
