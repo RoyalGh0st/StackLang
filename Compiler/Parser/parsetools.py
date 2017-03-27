@@ -56,15 +56,15 @@ def parseVarDec(text):
                 
         elif (tokenList[0] == 'Short' or 'Int' or 'Long'):
             
-            if grabbertools.getNextNum(varinit) is not None:
-                tokenList.append(tokens.Token(tokens.NUM, 
-                                grabbertools.getNextNum(varinit)))
+            print(grabbertools.getNextNum(varinit))
             
+            if (grabbertools.getNextNum(varinit) is not None):
+                
+                tokenList.append(tokens.Token(tokens.Var[tokenList[0]], 
+                                                grabbertools.getNextNum(varinit)))
             else:
                 
-                print('Invalid value for', tokenList[0], 'variable.')
-                return 0
-            
+                print('Invalid value for ', tokenList[0], ' variable.')
         else:
             
             print('Invalid type.')
