@@ -5,7 +5,6 @@
 ###########################
 # Miscallaneous Constants #
 ###########################
-NUM, STR = 'NUM', 'STR'
 PLUS, MINUS = 'PLUS', 'MINUS'
 TIMES, DIVIDE = 'TIMES', 'DIVIDE'
 RBRACE, LBRACE = 'RBRACE', 'LBRACE'
@@ -58,10 +57,13 @@ Logic = {
     'and': AND
 }
 
-################################
-# Variable types and modifiers #
-################################
+##################################################
+# Variable types and modifiers                   #
+# Also basically everything to do with variables #
+##################################################
 # Types:
+NUM, STR = 'NUM', 'STR' # num just grows in memory space if it is needed
+CHAR = 'CHAR'
 SHORT, INT, LONG = 'SHORT', 'INT', 'LONG'
 FLOAT, DOUBLE = 'FLOAT', 'DOUBLE'
 
@@ -71,6 +73,9 @@ VOLATILE = 'VOLATILE'
 INTERNAL = 'INTERNAL'
 EXTERNAL = 'EXTERNAL'
 STATIC = 'STATIC'
+
+# Constants for parsing
+VAR_NAME = 'VAR_NAME'
 
 Var = {
     'short': SHORT,
