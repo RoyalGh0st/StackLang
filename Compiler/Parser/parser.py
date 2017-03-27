@@ -1,8 +1,11 @@
 # Contains token class and constants
-import Tokens
+import tokens
 
 # Contains tools used during parsing
 import parsetools
+
+# Contains tools for grabbing important things from text
+import grabbertools
 
 def isNumber(s):
     try:
@@ -114,54 +117,26 @@ class Parser(object):
                     number += text[pos2]
                     pos2 += 1
                     
-                tokenList.append(Tokens.Token(Tokens.Misc['NUM'], float(number)))
+                tokenList.append(tokens.Token(tokens.Misc['NUM'], float(number)))
                 pos = pos2
                 
             elif (currentChar == '='):
-                tokenList.append(Tokens.Token(Tokens.Misc['ASSIGN'], currentChar))
+                tokenList.append(tokens.Token(tokens.Misc['ASSIGN'], currentChar))
                 pos += 1
                 
             else:
-                if wordTools.getNextWord(text[pos:]) is not None:
-                    word = wordTools.getNextWord(text[pos:])
-                    
-                    if (wordTools.isKeyWord(word) != False):
-                        
-                        if (word != 'if' or 'else' or 'elif' or 'true' or 'false'
-                            or 'or' or 'and'):
-                            word2 = wordTools.getNextWord(text[pos+len(wordTools.getNextWord(text[pos:])):])
-                            tokenList.append(Tokens.Token(Tokens.Keywords[word], word2))
-                        else:
-                            tokenList.append(Tokens.Token(Tokens.Keywords[word], word))
-                        
-                    else:
-                        tokenList.append(Tokens.Token(Tokens.Misc['UNDEF_WORD'], word))
-                        
-                    pos += len(word) + 1
-                elif wordTools.getNextKeySequence(text[pos:]) is not None:
-                    seq = wordTools.getNextKeySequence(text[pos:])
-                    
-                    tokenList.append(Tokens.Token(Tokens.KeySequences[seq], seq))
-                    
-                    pos += len(seq)
+                if grabbertools.getNextVarDec(text[pos:]) is not None:
+                    tokenList.append(parsetools.parseVarDec(grabbertools.getNextVarDec(text[pos:])))
+                    print(grabbertools.getNextVarDec(text[pos:]))
+                    pos += len(grabbertools.getNextVarDec(text[pos:])) + 1
+                
+                else:
+                    tokenList.append(tokens.Token(tokens.UNDEF_CHAR, currentChar))
+                    pos += 1
                 
         return(tokenList)
-        
-def printNestedTLists(li):
-    for item in li:
-        if (type(item) == list):
-            print('{')
-            printNestedTLists(item)
-            print('}')
-        else:
-            print(item.type, ':', item.value)
     
-def main():
-    parser = Parser(input("Enter test case: "))
-    print(parser.text, end='\n\n')
+def parse(toParse):
+    parser = Parser(toParse)
     parser.tokenList = parser.Parse(parser.text)
-    print(' ', end='\n\n')
-    printNestedTLists(parser.tokenList)
-    
-    
-main()
+    return parser.tokenList
