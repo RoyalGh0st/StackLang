@@ -25,6 +25,37 @@ def getNextWord(text):
     return (word)
 # end getNextWord
 
+def getNextNum(text):
+    # Grabs the next set of numbers from the text
+    # i.e. 24988 or 192498
+    num = ''
+    pos = 0
+    record = False
+    
+    while pos < len(text):
+        currentchar = text[pos]
+        
+        if currentchar.isdigit() == False:
+            record = False
+        
+        if currentchar.isdigit() == True:
+            record = True
+        
+        if currentchar.isdigit() == False and record == True:
+            break
+        
+        if record == True:
+            num += currentchar
+            
+        pos += 1
+    
+    if num is not '':
+        num = float(num)
+    else:
+        return None
+    
+    return (num)
+
 def getNextKeySeq(text):
     # This function grabs the next key sequence from input text
     # At the moment, just mathematical operators
@@ -43,16 +74,32 @@ def getNextKeySeq(text):
 
 def getNextVarDec(text):
     # Gets the next variable declaration from the text
-    # See /docs/specs/statements.txt for more details
+    # See /docs/specs/statements.txt for more details on what a statement is
     
-    getvardec = re.compile('^((char|str|short|int|long)( \\w+)( +?= +?\\d)?)')
+    getvardec = re.compile('^((char|str|short|int|long) \w+( ?= ?(\w+|\d+))?)')
     vardec = getvardec.match(text)
     
     if vardec is not None:
-        vardecindex = vardec.span
+        vardecindex = vardec.span()
     else:
         return None
     
     vardec = text[vardecindex[0]:vardecindex[1]]
     
     return vardec
+    
+def getNextVarInit(text):
+    # Gets the next initialization of a variable from the text
+    
+    getvarinit = re.compile('^(( *= *)(\w+|\d+))')
+    varinit = getvarinit.match(text)
+    
+    if varinit is not None:
+        varinitindex = varinit.span()
+    else:
+        return None
+    
+    varinit = text[varinitindex[0]:varinitindex[1]]
+    
+    return varinit
+    
