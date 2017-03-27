@@ -2,7 +2,7 @@
 import Tokens
 
 # Contains tools used during parsing
-import parseTools
+import parsetools
 
 def isNumber(s):
     try:
