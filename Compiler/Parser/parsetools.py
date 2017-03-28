@@ -15,43 +15,27 @@ def parseVarDec(text):
     tokenList.append(grabbertools.getNextWord(text).title())
     pos += len(grabbertools.getNextWord(text)) + 1
     
+    # Now get the variable name
     tokenList.append(tokens.Token(tokens.VAR_NAME, grabbertools.getNextWord(text[pos:])))
-    print(grabbertools.getNextWord(text[pos:]))
+    
+    print('Remaining text: ', text[pos:])
+    print('getVarInit: ', grabbertools.getNextVarInit(text[pos:]))
+    
     pos += len(grabbertools.getNextWord(text[pos:]))
     
-    print (len(text), pos)
-    print(text[pos:])
-    
-    print(grabbertools.getNextVarInit(text[pos:]))
-    
     if grabbertools.getNextVarInit(text[pos:]) is not None:
+        
         varinit = grabbertools.getNextVarInit(text[pos:])
-        print('varinit ', varinit)
+        
         if (tokenList[0] == 'Char'):
             
-            if (grabbertools.getNextWord(varinit) is not None):
+            if (grabbertools.getNextChar(varinit) != None):
+                tokenList.append(tokens.Token(tokens.CHAR, 
+                                              grabbertools.getNextChar(varinit)))
                 
-                if len(grabbertools.getNextWord(varinit)) > 1:
-                    
-                    print('Invalid value for char variable.')
-                    return 0
-                    
-                tokenList.append(tokens.Token(tokens.CHAR, grabbertools.getNextWord(varinit)))
-            
+                print('parseVarDec->Char->getNextChar(varinit): ', grabbertools.getNextChar(varinit)[1:-1])
             else:
-                
-                print('Invalid value for char variable.')
-                return 0
-                
-        elif (tokenList[0] == 'Str'):
-            
-            if (grabbertools.getNextWord(varinit) is not None):
-                
-                tokenList.append(tokens.Token(tokens.STR, grabbertools.getNextWord(varinit)))
-                
-            else:
-                
-                print('Invalid value for str variable.')
+                print("Invalid value for char variable.")
                 return 0
                 
         elif (tokenList[0] == 'Short' or 'Int' or 'Long'):
@@ -69,5 +53,7 @@ def parseVarDec(text):
             
             print('Invalid type.')
             return 0
+    else:
+        print("parseVarDec: Can't find varinit")
     
     return (tokenList)
