@@ -127,7 +127,7 @@ class Parser(object):
             else:
                 if grabbertools.getNextVarDec(text[pos:]) is not None:
                     tokenList.append(parsetools.parseVarDec(grabbertools.getNextVarDec(text[pos:])))
-                    print(grabbertools.getNextVarDec(text[pos:]))
+                    print('vdec: ', grabbertools.getNextVarDec(text[pos:]))
                     pos += len(grabbertools.getNextVarDec(text[pos:])) + 1
                 
                 else:
@@ -135,8 +135,26 @@ class Parser(object):
                     pos += 1
                 
         return(tokenList)
+        
+def printNestedTLists(li):
+    for item in li:
+        if (type(item) == list):
+            print('{')
+            printNestedTLists(item)
+            print('}')
+        else:
+            if type(item) == str:
+                print(item)
+            elif type(item) == tokens.Token:
+                print(item.type, ':', item.value)
+
     
-def parse(toParse):
-    parser = Parser(toParse)
+def main():
+    parser = Parser("char x = 'x';")
+    print('1: ', parser.text, end='\n\n')
     parser.tokenList = parser.Parse(parser.text)
-    return parser.tokenList
+    print(' ', end='\n\n')
+    printNestedTLists(parser.tokenList)
+    
+    
+main()
