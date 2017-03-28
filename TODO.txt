@@ -2,7 +2,6 @@ A list of current objectives.
 
 Priority 1:
 ===========
-- Recognize (parse) variable types short, int, long
 - Recognize (parse) variable types char, str
 - Recognize (parse) basic mathematical operators
 - Recognize (parse) a variable declaration statement (definition in docs/specs/statement.txt)
