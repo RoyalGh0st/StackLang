@@ -5,10 +5,12 @@
 ####################################################################################
 '''
 
-import Tokens
+import tokens
+import grabbertools
 
 # The regex library
 import re
+
 
 def getNextWord(text):
     # This function grabs the next word from input text
@@ -28,6 +30,7 @@ def getNextWord(text):
 def getNextNum(text):
     # Grabs the next set of numbers from the text
     # i.e. 24988 or 192498
+    # Regex was not used for this because I couldn't get it to work
     num = ''
     pos = 0
     record = False
@@ -55,6 +58,22 @@ def getNextNum(text):
         return None
     
     return (num)
+    
+def getNextChar(text):
+    # Grabs the next character type from text
+    # i.e. 'x' or 'z', but not "x" or "z" or "foobar"
+    # Again, no regex, because regex annoys me for this kind of thing
+    c = ''
+    pos = 0
+    record = False
+    
+    while (pos < len(text)):
+        currentc = text[pos]
+        
+        if currentc == "'":
+            c = text[pos+1]
+            return c
+        pos += 1
 
 def getNextKeySeq(text):
     # This function grabs the next key sequence from input text
@@ -75,23 +94,28 @@ def getNextKeySeq(text):
 def getNextVarDec(text):
     # Gets the next variable declaration from the text
     # See /docs/specs/statements.txt for more details on what a statement is
+    # Regex annoyed me, so I didn't use it for this one
+    print('\ncalled vdec on: ', text)
     
-    getvardec = re.compile('^((char|str|short|int|long) \w+( ?= ?(\w+|\d+))?)')
-    vardec = getvardec.match(text)
+    getvdec = re.compile('''(((char)|(str)|(short)|(int)|(long)) \w( ?= ?(('\w')|("\w*")|(\d*))?));''')
+    vdec = getvdec.match(text)
     
-    if vardec is not None:
-        vardecindex = vardec.span()
+    if vdec is not None:
+        vdecindex = vdec.span()
     else:
+        print('vdec returns: None')
         return None
+        
+    vdec = text[vdecindex[0]:vdecindex[1]]
     
-    vardec = text[vardecindex[0]:vardecindex[1]]
+    print('vdec returns: ', vdec)
     
-    return vardec
+    return vdec
     
 def getNextVarInit(text):
     # Gets the next initialization of a variable from the text
     
-    getvarinit = re.compile('^(( *= *)(\w+|\d+))')
+    getvarinit = re.compile(' *= *.+;')
     varinit = getvarinit.match(text)
     
     if varinit is not None:
