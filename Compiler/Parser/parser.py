@@ -1,11 +1,16 @@
 # Contains token class and constants
 import tokens
 
+# Test programs
+import test
+
 # Contains tools used during parsing
 import parsetools
 
 # Contains tools for grabbing important things from text
 import grabbertools
+
+import Global
 
 def isNumber(s):
     try:
@@ -84,14 +89,12 @@ class Parser(object):
         while (pos < len(text)):
             currentChar = text[pos]
             
-            #print(pos, ',', len(text), end='\n\n')
-            
             if (currentChar == '{'):
                 try:
                     block = self.getBlock(text[pos:])
                 except IndexError:
                     # IndexError is recieved when the block tokens are unbalanced.
-                    raise Exception("Invalid syntax: unbalanced block tokens.")
+                    Global.ErrorsGenerated.Append('Syntax error: imbalanced blocks.')
                     
                 # We just assume that the getBlock call succeded
                 # Because if not, an error has been generated
@@ -127,11 +130,9 @@ class Parser(object):
             else:
                 if grabbertools.getNextVarDec(text[pos:]) is not None:
                     tokenList.append(parsetools.parseVarDec(grabbertools.getNextVarDec(text[pos:])))
-                    print('vdec: ', grabbertools.getNextVarDec(text[pos:]))
                     pos += len(grabbertools.getNextVarDec(text[pos:])) + 1
                 
                 else:
-                    tokenList.append(tokens.Token(tokens.UNDEF_CHAR, currentChar))
                     pos += 1
                 
         return(tokenList)
@@ -150,11 +151,24 @@ def printNestedTLists(li):
 
     
 def main():
-    parser = Parser("char x = 'x';")
-    print('1: ', parser.text, end='\n\n')
+    parser = Parser('''short x = 124;
+int y = 124;
+long z = 124;
+char a = 'a';
+str b = "abc";
+''')
     parser.tokenList = parser.Parse(parser.text)
-    print(' ', end='\n\n')
-    printNestedTLists(parser.tokenList)
+    
+    if (Global.ErrorsGenerated == []):
+        print('\n')
+        printNestedTLists(parser.tokenList)
+    else:
+        print('Errors in compilation:')
+        i = 0
+        for item in Global.ErrorsGenerated:
+            print(i, ':', item)
+            i += 1
     
     
-main()
+if __name__ == '__main__':
+    main()
