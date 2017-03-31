@@ -1,8 +1,8 @@
 '''
-####################################################################################
-# This file contains all of the regex functions specially tailored for the parser. #
-# Functions like "getKeyWord", "getNextWord", and others.                          #
-####################################################################################
+######################################################################################
+# This file contains all of the grabber functions specially tailored for the parser. #
+# Functions like "getKeyWord", "getNextWord", and others.                            #
+######################################################################################
 '''
 
 import tokens
@@ -60,20 +60,60 @@ def getNextNum(text):
     return (num)
     
 def getNextChar(text):
-    # Grabs the next character type from text
-    # i.e. 'x' or 'z', but not "x" or "z" or "foobar"
-    # Again, no regex, because regex annoys me for this kind of thing
-    c = ''
+    # Grabs the next char type from text
+    # i.e. 'x' or 'z' or even 'abc' (but that's error checked in parseVarDec) 
+    # but not "x" or "z" or "foobar"
+    # Regex would not work here
+    # So I didn't use it.
+    char = ''
     pos = 0
+    currentc = ''
+    record = ''
+    
+    while (pos < len(text)):
+        currentc = text[pos]
+        
+        if (currentc == "'"):
+            char = text[pos+1]
+            if (text[pos+2] is not "'"):
+                return None
+            break
+            
+        pos += 1
+    
+    return char
+        
+def getNextStr(text):
+    # Grabs the next str type from text
+    # i.e. "abc" or "d"
+    # Regex didn't work here
+    # Or maybe I'm just bad at it
+    # Whichever
+    pos = 0
+    Str = ''
+    currentc = ''
     record = False
     
     while (pos < len(text)):
         currentc = text[pos]
         
-        if currentc == "'":
-            c = text[pos+1]
-            return c
+        if (currentc == '"'):
+            if record == True:
+                break
+            else:
+                record = True
+        
+        if record == True:
+            Str += currentc
+            
         pos += 1
+        
+    # That little bit is there because the function kept recording " as the first character
+    # And I couldn't figure out why
+    if (Str[0] == '"'):
+        Str = Str[1:]
+    
+    return Str
 
 def getNextKeySeq(text):
     # This function grabs the next key sequence from input text
@@ -95,27 +135,23 @@ def getNextVarDec(text):
     # Gets the next variable declaration from the text
     # See /docs/specs/statements.txt for more details on what a statement is
     # Regex annoyed me, so I didn't use it for this one
-    print('\ncalled vdec on: ', text)
     
-    getvdec = re.compile('''(((char)|(str)|(short)|(int)|(long)) \w( ?= ?(('\w')|("\w*")|(\d*))?));''')
+    getvdec = re.compile('''(((char)|(str)|(short)|(int)|(long)) \w( ?= ?(('\w*')|("\w*")|(\d*))?));''')
     vdec = getvdec.match(text)
     
     if vdec is not None:
         vdecindex = vdec.span()
     else:
-        print('vdec returns: None')
         return None
         
     vdec = text[vdecindex[0]:vdecindex[1]]
-    
-    print('vdec returns: ', vdec)
     
     return vdec
     
 def getNextVarInit(text):
     # Gets the next initialization of a variable from the text
     
-    getvarinit = re.compile(' *= *.+;')
+    getvarinit = re.compile('( *= *.+;)+?')
     varinit = getvarinit.match(text)
     
     if varinit is not None:
