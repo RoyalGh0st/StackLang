@@ -1,258 +1,94 @@
 statement.txt
-Defines what exactly a statement is, and the syntax for it.
-===========================================================
+Contains specifications about statements for ILang.
+ALL CORRECT IMPLEMENTATIONS OF I LANGUAGE MUST FOLLOW THESE SPECIFICATIONS
+================================================================================
 
-+================================================================================================+
-| ANY CORRECT IMPLEMENTATION OF I LANGUAGE MUST FOLLOW THE STATEMENT SPECIFICATIONS IN THIS FILE |
-+================================================================================================+
+Statements in I take one of eight forms:
 
-A single statement in I takes one of eight forms:
-  - Logic statement
-  - Simple statement
-  - Function call
-  - Loop statement
-  - Variable declaration
-  - Function definition
-  - Object definition
-  - Class definition
+    - Simple statements
+    - Variable declarations
+    - Logic statements
+    - Loop statements
+    - Function definition
+    - Function call
+    - Class definition
+    - Object definition
+    
+================================================================================
 
-===================================================
-
-A logic statement is defined by the following syntax:
-
-  (if, elif, else)(logical parameters) {
-    (one or more statements of any type, except function definitions)
-  }
-
-It is parsed into a single block (in the token list) in the following way (for the creators' implementation):
-  ...[
-      'Logic',
-      [(if, elif, else),
-        [
-          (logical parameters)
-        ]
-      ]
-        (one or more statements of any type, except function definitions)
-     ]...
-
-As an example:
-  if (a == b) {
-    putstr("a");
-    putstr("b");
-  }
-
-This is an if statement that, if true, will use the built in function putstr to print a and b to the terminal.
-
-A switch statement follows a different syntax:
-
-  switch(variable) {
-    ( 1 or more times (
-    ( 1 or more times((case)(value):))
-      (one or more statements of any type, except function definitions)
-    ))
-  }
-
-It is parsed into a single block (in the token list) in the following way (for the creators' implementation):
-  ...[
-      'Switch',
-      ( 1 or more times ( 
-        [value, (one or more statements of any type, except function definitions)]
-      ))
-     ]...
-     
-As an example:
-
-  switch(a) {
-    case 1:
-      putstr("1");
-      break;
-    case 2:
-      putstr("2");
-      break;
-    default:
-      putstr("3");
-
-=======================================================
+Form 1: Simple statements
 
 A simple statement is defined by the following syntax:
 
-  ( one or more times (
-    (one operand)(one operator)({unless a unary operator}:(one operand));
-  ))
+    [Optional: unary operator]operand<whitespace>operator<whitespace>[Optional: unary operator]operand
 
-It is parsed into a single block (in the token list) in the following way (for the creators' implementation):
+which is repeated until termination of the statement by a semicolon.
 
-  ...[
-      'SimpleStatement',
-      ( one or more times (
-        [(one operand), (one operator), {unless unary operator: (one operand)}]
-      ))
-    ]...
+For example:
     
-As an example:
-
-  a + b
-
-Is tokenized to:
-
-  ...[
-    a, +, b
-    ]...
+    c = ++1 - --b;
     
- ==================================================
- 
- A function call is defined by the following syntax:
- 
-  (function(parameters));
-  
-It is parsed into a single block (in the token list) in the following way (for the creators' implementation):
+is represented as:
 
-  ...[
-      'FunctionCall',
-      (function), [(parameters)]
-     ]...
-     
- As an example:
- 
-  func1(a, b);
-  
-===================================================
+    operand,
+    operator,
+    unary operator: operand,
+    operator,
+    unary operator: operand,
+    semicolon termination
 
-A loop statement is defined by the following syntax:
+================================================================================
 
-  (for, while)(parameters) {
-    (one or more statements of any type)
-  }
-  
-It is parsed into a single block (in the token list) in the following way (for the creators' implementation):
-
-  ...[
-      'Loop',
-      [
-        (for, while),
-        [(parameters]
-      ],
-      [
-        (one or more statements of any type, except function definitions)
-      ]
-     ]...
-     
-As an example:
-
-  for (int a; a < 10; ++a) {
-    putnum(a);
-  }
-  
-========================================================
+Form 2: Variable declaration
 
 A variable declaration is defined by the following syntax:
 
-  {Optional: (variable modifiers)}(variable type)(name){Optional{=, (value)}};
-  
-It is parsed into a single block (in the token list) in the following way (for the creators' implementation):
-
-  ...[
-      'Var',
-      {Optional:
-        (variable modifiers),
-      }
-      (type),
-      (name)
-      {Optional:
-        (value)
-      }
-    ]...
+    <variable type><whitespace><variable name> [Optional:[Optional: <whitespace>] = [Optional: <whitespace] (value | simple statement lacking semicolon)];
     
-As an example:
-  int a = 1;
-  Immutable int b = a + 1;
-  int c;
-      
-=========================================================
+For example:
+    
+    int a = 1;
+    or
+    int a;
+    
+is valid.
+    
+    int b = a + 1;
+    
+is also valid.
 
-A function definition is defined by the following syntax:
+================================================================================
 
-  func (function name)(parameters)(return type):{
-    (one or more statements of any type, except function definitions)
-  }
+Form 3: Logic statement
 
-It is parsed into a single block (in the token list) in the following way (for the creators' implementation):
+A logic statement is defined by the following syntax:
 
-  ...[
-      'Function',
-      (name),
-      [
-        (parameters)
-      ],
-      (return type),
-      [
-        (one or more statements of any type, except function definitions)
-      ]
-     ]...
-  
-As an example:
-
-  func a(int b, int c)(int):{
-    return(a + b);
-  }
-  
-==========================================================
-
-An object creation statement is defined by the following syntax:
-
-  Object (object name){Optional: (object extended)} {
-    [Standard except some cases (defined in specs/objects.txt): (Channel related things)]
-    (one or more statements of any type, except object definitions)
-  }
-  
-It is parsed into a single block (in the token list) in the following way (for the creators' implementation):
-
-  ...[
-      'Object',
-      (name),
-      {Optional: 
-        (object extended)
-      }
-      [
-        (one or more statements of any type, except object definitions)
-      ]
-     ]...
-     
-As an example:
-  
-  Object a {
-    // No channels, because none needed
-    func b(str c)(void):{
-      putstr(in);
+    (if | elif | else) (parameters) {
+        [Optional: one or more statements of any type, except function definitions]
     }
-  }
-  
-============================================================
+    
+For example:
 
-A class definition is defined by the following syntax:
-
-  Class (class name){Optional: (class extended)} {
-    (one or more variable declarations or function definitions)
-  }
-
-It is parsed into a single block (in the token list) in the following way (for the creators' implementation):
-
-  ...[
-      'Class',
-      (class name),
-      {Optional:
-        (class extended),
-      }
-      [
-        (one or more variable declarations or function definitions)
-      ]
-     ]...
-     
-As an example:
-
-  Class a {
-    int b;
-    func c(int d)(int):{
-      return (d * d);
+    if (a == 1) {
+        print(a);
     }
-  }
+    
+================================================================================
+
+Form 4: Loop statement
+
+A loop statement is defined by the following syntax:
+
+    (for | while) (parameters) {
+        [Optional: one or more statements of any type, except function definitions]
+    }
+    
+For example:
+
+    for (int i = 0; i < 10; ++i) {
+        print(i);
+    }
+    
+================================================================================
+
+Form 5: Function definition
