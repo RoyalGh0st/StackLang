@@ -1,8 +1,8 @@
 '''
-######################################################################################
-# This file contains all of the grabber functions specially tailored for the parser. #
-# Functions like "getKeyWord", "getNextWord", and others.                            #
-######################################################################################
+####################################################################################
+# This file contains all of the regex functions specially tailored for the parser. #
+# Functions like "getKeyWord", "getNextWord", and others.                          #
+####################################################################################
 '''
 
 import tokens
@@ -162,4 +162,23 @@ def getNextVarInit(text):
     varinit = text[varinitindex[0]:varinitindex[1]]
     
     return varinit
+    
+    
+def getNextSimpleState(text):
+    # Gets the next simple statement from the text
+    
+    pos = 0
+    
+    getstate = re.compile('''
+    (((\+\+|\-\-)?(\w+|\d+) ?(\+|\-|\*|/|=) ?)+) ?(\w+|\d+);
+    ''')
+    
+    state = getstate.match(text)
+    
+    if state is not None:
+        state = text[state.span()[0]:state.span()[1]]
+    else:
+        return None
+    
+    return state
     
