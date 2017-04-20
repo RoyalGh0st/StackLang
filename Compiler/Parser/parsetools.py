@@ -59,3 +59,46 @@ def parseVarDec(text):
             return 0
     
     return (tokenList)
+    
+def parseSimpleState(text):
+    # Parses a simple statement into a token list
+    # Assumes that the inputted text is a valid statement.
+    
+    # But we check anyway
+    if text == None:
+        return None
+        
+    tokenList = []
+    
+    tokenlistpos = 0
+    
+    pos = 0
+    
+    # This loop handles most of the things
+    while(pos < len(text)):
+        cc = text[pos] # cc = current char
+        
+        if cc.isalnum() == True:
+            # Just avoiding errors with the if statement below
+            if pos > 0:
+                if text[pos - 1].isalnum == True:
+                    tokenList[tokenlistpos].value += cc
+                else:
+                    tokenList.append(tokens.Token(tokens.OD_NAME, cc))
+            else:
+                tokenList.append(tokens.Token(tokens.OD_NAME, cc))
+                
+            tokenlistpos = len(tokenList)
+                
+        elif cc == '+' or cc == '-' or cc == '*' or cc == '-' or cc == '=':
+            tokenList.append(tokens.Token(tokens.OP, cc))
+            tokenlistpos = len(tokenList)
+        
+        else:
+            tokenlistpos = len(tokenList)
+            
+        pos += 1
+            
+    return tokenList
+    
+    
