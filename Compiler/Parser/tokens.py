@@ -19,8 +19,8 @@ COLON = 'COLON'
 SINGLE_QUOTE, DOUBLE_QUOTE = 'SINGLE_QUOTE', 'DOUBLE_QUOTE'
 
 Misc = {
-    'num': NUM,
-    'str': STR,
+    'Num': NUM,
+    'Str': STR,
     'PLUS': PLUS,
     'MINUS': MINUS,
     'TIMES': TIMES,
@@ -58,15 +58,14 @@ Logic = {
     'and': AND
 }
 
-##################################################
-# Variable types and modifiers                   #
-# Also basically everything to do with variables #
-##################################################
+################################
+# Variable types and modifiers #
+################################
 # Types:
-NUM, STR = 'NUM', 'STR' # num just grows in memory space if it is needed
-CHAR = 'CHAR'
 SHORT, INT, LONG = 'SHORT', 'INT', 'LONG'
 FLOAT, DOUBLE = 'FLOAT', 'DOUBLE'
+CHAR, STR = 'CHAR', 'STR'
+NUM = 'NUM'
 
 # Modifiers:
 IMMUTABLE = 'IMMUTABLE'
@@ -75,10 +74,17 @@ INTERNAL = 'INTERNAL'
 EXTERNAL = 'EXTERNAL'
 STATIC = 'STATIC'
 
-# Constants for parsing
+# Tokenizing simple statements
+OD_NAME = 'OD_NAME'
+OP = 'OP'
+
+# Variable names
 VAR_NAME = 'VAR_NAME'
 
 Var = {
+    'Num': NUM,
+    'Char': CHAR,
+    'Str': STR,
     'Short': SHORT,
     'Int': INT,
     'Long': LONG,
@@ -88,29 +94,31 @@ Var = {
     'Volatile': VOLATILE,
     'Internal': INTERNAL,
     'External': EXTERNAL,
-    'Static': STATIC
+    'Static': STATIC,
+    'OD_NAME': OD_NAME,
+    'OP': OP
 }
 
 Keywords = {
-    'short': SHORT,
-    'int': INT,
-    'long': LONG,
-    'float': FLOAT,
-    'double': DOUBLE,
+    'Short': SHORT,
+    'Int': INT,
+    'Long': LONG,
+    'Float': FLOAT,
+    'Double': DOUBLE,
     'Immutable': IMMUTABLE,
     'Volatile': VOLATILE,
     'Internal': INTERNAL,
     'External': EXTERNAL,
     'Static': STATIC,
-    'if': IF,
-    'elif': ELIF,
-    'else': ELSE,
-    'true': TRUE,
-    'false': FALSE,
-    'or': OR,
-    'and': AND,
-    'num': 'NUM',
-    'str': 'STR'
+    'If': IF,
+    'Elif': ELIF,
+    'Else': ELSE,
+    'True': TRUE,
+    'False': FALSE,
+    'Or': OR,
+    'And': AND,
+    'Num': NUM,
+    'Str': STR
 }
 
 KeySequences = {
