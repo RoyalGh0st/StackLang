@@ -1,9 +1,6 @@
 # Contains token class and constants
 import tokens
 
-# Test programs
-import test
-
 # Contains tools used during parsing
 import parsetools
 
@@ -120,7 +117,7 @@ class Parser(object):
                     number += text[pos2]
                     pos2 += 1
                     
-                tokenList.append(tokens.Token(tokens.Misc['NUM'], float(number)))
+                tokenList.append(tokens.Token(tokens.Var['Num'], float(number)))
                 pos = pos2
                 
             elif (currentChar == '='):
@@ -129,8 +126,15 @@ class Parser(object):
                 
             else:
                 if grabbertools.getNextVarDec(text[pos:]) is not None:
-                    tokenList.append(parsetools.parseVarDec(grabbertools.getNextVarDec(text[pos:])))
+                    tokenList.append(parsetools.parseVarDec(
+                                                        grabbertools.getNextVarDec(text[pos:])))
                     pos += len(grabbertools.getNextVarDec(text[pos:])) + 1
+                
+                elif grabbertools.getNextSimpleState(text[pos:]) is not None:
+                    tokenList.append(parsetools.parseSimpleState(
+                                                grabbertools.getNextSimpleState(text[pos:])))
+                                                
+                    pos += len(grabbertools.getNextSimpleState(text[pos:])) + 1
                 
                 else:
                     pos += 1
@@ -156,10 +160,13 @@ int y = 124;
 long z = 124;
 char a = 'a';
 str b = "abc";
+a + b;
+c - d;
+e - g * c + d / 3;
 ''')
     parser.tokenList = parser.Parse(parser.text)
     
-    if (Global.ErrorsGenerated == []):
+    '''if (Global.ErrorsGenerated == []):
         print('\n')
         printNestedTLists(parser.tokenList)
     else:
@@ -167,7 +174,9 @@ str b = "abc";
         i = 0
         for item in Global.ErrorsGenerated:
             print(i, ':', item)
-            i += 1
+            i += 1'''
+            
+    printNestedTLists(parser.tokenList)
     
     
 if __name__ == '__main__':
